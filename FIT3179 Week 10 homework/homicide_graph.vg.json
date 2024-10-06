@@ -1,0 +1,68 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Homicide Incidents Over Time (Multiple States)",
+    "data": {
+      "url": "data/homicide_statistics.csv",
+      "format": { "type": "csv" }
+    },
+    "params": [
+      {
+        "name": "Incident_States",
+        "bind": {
+          "input": "select",
+          "options": [
+            null,
+            "incidents_NSW",
+            "incidents_VIC",
+            "incidents_QLD",
+            "incidents_SA",
+            "incidents_WA",
+            "incidents_TAS"
+          ],
+          "labels": ["Show All", "NSW", "VIC", "QLD", "SA", "WA", "TAS"],
+          "name": "Incident State"
+        }
+      }
+    ],
+    "transform": [
+      {
+        "fold": [
+          "incidents_NSW",
+          "incidents_VIC",
+          "incidents_QLD",
+          "incidents_SA",
+          "incidents_WA",
+          "incidents_TAS"
+        ],
+        "as": ["States", "Incidents"]
+      },
+      {
+        "filter": "Incident_States == null || datum.States == Incident_States"
+      }
+    ],
+    "mark": {
+      "type": "line",
+      "tooltip": true,
+      "point": {
+
+      }
+    },
+    "encoding": {
+      "x": { "field": "period", "type": "ordinal" },
+      "y": { "field": "Incidents", "type": "quantitative" },
+      "color": {
+        "condition": {
+          "test": "datum.States == Incident_States || Incident_States == null",
+          "field": "States",
+          "type": "nominal"
+        },
+        "value": "lightgrey"
+      },
+      "tooltip": [
+        { "field": "States", "type": "nominal", "title": "States" },
+        { "field": "period", "type": "ordinal", "title": "Period" },
+        { "field": "Incidents", "type": "quantitative", "title": "Incidents" }
+      ]
+    }
+  }
+  

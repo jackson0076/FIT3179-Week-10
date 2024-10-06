@@ -1,0 +1,12 @@
+/* Centering the content */
+body {
+    display: flex;
+    flex-direction: column;
+
+    text-align: center; 
+  }
+
+  
+#line_graph {
+    margin-bottom: 40px;
+}
