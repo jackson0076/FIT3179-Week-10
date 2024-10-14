@@ -1,23 +1,49 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Bar chart showing the number of services by NBN speed types",
+  "title": "The number of services by NBN speed types",
+  "width": 400,
+  "height": 300,
   "data": {
     "url": "data/Services_by_NBN_speed.csv",
     "format": {
       "type": "csv"
     }
   },
-  "mark": "bar",
+
+  "transform": [
+    {
+      "calculate": "datum['Num_service'] * 1000",
+      "as": "Num_service"
+    }],
+    "mark": {
+      "type": "bar",
+      "color": "#FFA500" 
+    },
   
   "encoding": {
      "x": {
         "field": "Num_service",
-        "type": "quantitative"
+        "type": "quantitative",
+        "title":"Number of connected services"
       },
     "y": {
       "field": "Speed_Name",
       "type": "nominal",
-      "title":"speed Name"
-    }
+      "title":"speed Type (Mbps)"
+    },
+    "tooltip": [
+          {
+            "field": "Speed_Name",
+            "type": "nominal",
+            "title": "Speed Type (Mbps)"
+          },
+          {
+            "field": "Num_service",
+            "type": "quantitative",
+            "title": "Number of connected services",
+            "format": ","
+          }
+        ]
+        
   }
 }

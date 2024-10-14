@@ -1,8 +1,8 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 800,
-    "height": 450,
-    "title": "Average Internet Speeds by Country (2024)",
+    "width": 1000,
+    "height": 400,
+    "title": "Average mean Internet Speeds by Country (2024)",
     "projection": { "type": "equalEarth" },
     "data": {
       "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
@@ -39,7 +39,7 @@
             "field": "InternetSpeeds_MedianFixedBroadbandDownloadSpeed_Mbps_2024",
             "type": "quantitative",
             "scale": {
-               "scheme": "blues"
+               "scheme": "greens"
             },
             "title": "Mean Download Speed (Mbps)"
           },

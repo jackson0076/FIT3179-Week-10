@@ -3,7 +3,7 @@
   "data": {
     "url": "data/internet-speeds-by-country-2024.csv"
   },
-  
+  "title": "Analysis of median Mobile and Fixed Broadband speeds by country",
   "width": 600,
   "height": 400,
   "params": [
@@ -131,7 +131,7 @@
         "baseline": "middle",
         "dx": -7,
     
-        "fontSize": 11.5,
+        "fontSize": 11,
         "fontStyle": "italic"
         
       },  "encoding": {
@@ -139,7 +139,7 @@
         "color": {"value": "black"},
         "opacity": {
           "condition": {
-            "test": "datum['Country'] == 'Australia' ||datum['Country'] == 'China'||datum['Country'] == 'South Korea' || datum['Country'] == 'Singapore'",
+            "test": "datum['Country'] == 'Australia' ||datum['Country'] == 'Qatar' ||datum['Country'] == 'United Arab Emirates' ||datum['Country'] == 'China'||datum['Country'] == 'Denmark' || datum['Country'] == 'Singapore'",
             "value": 1
           },
           "value": 0
