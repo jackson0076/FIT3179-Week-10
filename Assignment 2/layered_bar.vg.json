@@ -1,0 +1,116 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+ 
+  "title": "NBN vs Non-NBN Service by Brand",
+  "width": 400,
+  "height": 500,
+  "data": {
+    "url": "data/retail-brands-services.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum['NBN'] * 1000",
+      "as": "NBN"
+    },
+    {
+      "calculate": "datum['Non-NBN'] * 1000",
+      "as": "Non-NBN"
+    },
+    {
+      "fold": [
+        "NBN",
+        "Non-NBN"
+      ],
+      "as": [
+        "Service Type",
+        "Service Usage"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "name": "service_selection",
+      "select": {
+        "type": "point",
+        "fields": [
+          "Service Type"
+        ]
+      },
+      "bind": "legend"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Service Brands",
+      "type": "nominal",
+      "title": "Service Brands",
+      "axis": {
+        "labelAngle": 0,
+        "labelFontSize": 12,
+        "titleFontSize": 14
+      },
+      "sort": null
+    },
+    "color": {
+      "field": "Service Type",
+      "type": "nominal",
+      "scale": {
+        "range": [
+          "#1f77b4",
+          "#ff7f0e"
+        ]
+      },
+      "title": "Service Type",
+      "legend": {
+        "orient": "right"
+      }
+    },
+    "opacity": {
+      "condition": {
+        "param": "service_selection",
+        "value": 0.6
+      },
+      "value": 0.2
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "opacity": 0.7,
+        "size": 50
+      },
+      "encoding": {
+        "y": {
+          "field": "Service Usage",
+          "type": "quantitative",
+          "title": "Service Usage",
+          "axis": {
+            "title": "NBN and Non-NBN connected services"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Service Brands",
+            "type": "nominal",
+            "title": "Service Brands"
+          },
+          {
+            "field": "Service Usage",
+            "type": "quantitative",
+            "title": "Service Usage",
+            "format": ","
+          },
+          {
+            "field": "Service Type",
+            "type": "nominal",
+            "title": "Service Type"
+          }
+        ]
+      }
+    }
+  ]
+}

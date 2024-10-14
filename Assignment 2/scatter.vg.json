@@ -1,0 +1,171 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "data/internet-speeds-by-country-2024.csv"
+  },
+  
+  "width": 600,
+  "height": 400,
+  "params": [
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "labels": [
+          "Show All",
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.InternetSpeeds_MedianFixedBroadbandDownloadSpeed_Mbps_2024 > 0"
+    },
+    {
+      "filter": "datum.InternetSpeeds_MedianMobileDownloadSpeed_Mbps_2024 > 0"
+    },
+    {
+      "lookup": "Country",
+      "from": {
+        "data": {
+          "url": "data/Countries-Continents.csv"
+        },
+        "key": "Country",
+        "fields": [
+          "Continent"
+        ]
+      }
+    },
+    {
+      "filter": "Continent_selection == null || datum.Continent == Continent_selection"
+    }
+  ],
+
+  
+  "encoding": { 
+        "x": {
+          "field": "InternetSpeeds_MedianFixedBroadbandDownloadSpeed_Mbps_2024",
+          "type": "quantitative",
+          "title": "Median Fixed Broadband Speed (Mbps)",
+          "scale": {
+            "domain": [
+              0,
+              300
+            ]
+          }
+        },
+        "y": {
+          "field": "InternetSpeeds_MedianMobileDownloadSpeed_Mbps_2024",
+          "type": "quantitative",
+          "title": "Median Mobile Speed (Mbps)",
+          "scale": {
+            "domain": [
+              -10,
+              400
+            ]
+          }
+        }
+      },
+      
+  "layer": [
+    {
+      "mark": "circle",
+      "encoding": {
+        "color": {
+          "field": "Continent",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "North America",
+              "South America",
+              "Europe",
+              "Africa",
+              "Asia",
+              "Oceania"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Country",
+            "type": "nominal"
+          },
+          { 
+            "field": "Continent",
+            "type": "nominal"
+          },
+          {
+            "field": "InternetSpeeds_MedianFixedBroadbandDownloadSpeed_Mbps_2024",
+            "type": "quantitative",
+            "title": "Fixed Broadband Speed (Mbps)"
+          },
+          {
+            "field": "InternetSpeeds_MedianMobileDownloadSpeed_Mbps_2024",
+            "type": "quantitative",
+            "title": "Mobile Speed (Mbps)"
+          }
+        ]}
+      }
+      
+    ,
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -7,
+    
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+        
+      },  "encoding": {
+        "text": {"field": "Country", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition": {
+            "test": "datum['Country'] == 'Australia' ||datum['Country'] == 'China'||datum['Country'] == 'South Korea' || datum['Country'] == 'Singapore'",
+            "value": 1
+          },
+          "value": 0
+        },
+        "tooltip": [
+          {
+            "field": "Country",
+            "type": "nominal"
+          },
+          { 
+            "field": "Continent",
+            "type": "nominal"
+          },
+          {
+            "field": "InternetSpeeds_MedianFixedBroadbandDownloadSpeed_Mbps_2024",
+            "type": "quantitative",
+            "title": "Fixed Broadband Speed (Mbps)"
+          },
+          {
+            "field": "InternetSpeeds_MedianMobileDownloadSpeed_Mbps_2024",
+            "type": "quantitative",
+            "title": "Mobile Speed (Mbps)"
+          }
+        ]
+      }
+      
+    }
+  ]
+}

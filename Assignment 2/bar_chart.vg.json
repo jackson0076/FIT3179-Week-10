@@ -1,0 +1,23 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Bar chart showing the number of services by NBN speed types",
+  "data": {
+    "url": "data/Services_by_NBN_speed.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "mark": "bar",
+  
+  "encoding": {
+     "x": {
+        "field": "Num_service",
+        "type": "quantitative"
+      },
+    "y": {
+      "field": "Speed_Name",
+      "type": "nominal",
+      "title":"speed Name"
+    }
+  }
+}

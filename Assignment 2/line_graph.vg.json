@@ -1,0 +1,103 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Internet connection types over time",
+    "width": 600,
+    "height": 400,
+    "data": {
+        "url": "data/Total volume of data downloaded-1.csv"
+    },
+    "mark": {
+        "type": "line",
+        "tooltip": true,
+        "point": {}
+    },
+    "params": [
+        {
+            "name": "Connection_selection",
+            "bind": {
+                "input": "select",
+                "options": [
+                    null,
+                    "Home Wireless Broadband",
+                    "Mobile",
+                    "NBN",
+                    "Non-NBN"
+                ],
+                "labels": [
+                    "Show All",
+                    "Home Wireless Broadband",
+                    "Mobile",
+                    "NBN",
+                    "Non-NBN"
+                ],
+                "name": "Connection Type: "
+            }
+        }
+    ],
+    "transform": [
+        {
+            "fold": [
+                "NBN",
+                "Non-NBN",
+                "Mobile",
+                "Home Wireless Broadband"
+            ],
+            "as": [
+                "connection_type",
+                "value"
+            ]
+        }
+        ,
+        {
+            "filter": "Connection_selection == null || datum.connection_type == Connection_selection"
+          }
+    ],
+    "encoding": {
+        "x": {
+            "field": "date",
+            "type": "temporal"
+        },
+        "y": {
+            "field": "value",
+            "type": "quantitative",
+            "scale": { "domain": [0, 12000000]}
+        },
+        "color": {
+            "field": "connection_type",
+            "scale": {
+                "domain": [
+                    "Home Wireless Broadband",
+                    "Mobile",
+                    "NBN",
+                    "Non-NBN"
+                ],
+                "range": [
+                  "#e41a1c",
+                  "#984ea3",
+                  "#ff7f00",
+                  "#a6cee3"
+                ]
+              }
+        },
+        "tooltip": [
+            {
+              "field": "connection_type",
+              "type": "nominal",
+              "title": "Connection Type"
+            },
+            {
+              "field": "date",
+              "type": "temporal",
+              "title": "Date measured"
+              
+            },
+            {
+              "field": "value",
+              "type": "quantitative",
+              "title": "Total volume (TB)",
+                "format": ","
+
+            }
+          ]
+    }
+}
